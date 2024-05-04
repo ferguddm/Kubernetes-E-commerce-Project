@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecommerce-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ecommerce-app
+  template:
+    metadata:
+      labels:
+        app: ecommerce-app
+    spec:
+      containers:
+        - name: ecommerce-app
+          image: ecommerce-app:v5.8
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5001
+            
+          env:
+            - name: REDIS_HOST
+              value: redis-service
+            - name: MYSQL_HOST
+              value: mysql-service
+            - name: MONGODB_HOST
+              value: ecommerce-app-service

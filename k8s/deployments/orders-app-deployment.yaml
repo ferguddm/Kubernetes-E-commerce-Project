@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orders-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orders-app
+  template:
+    metadata:
+      labels:
+        app: orders-app
+    spec:
+      containers:
+        - name: orders-app
+          image: orders-app:v2.8
+          ports:
+            - containerPort: 5002
+          env:
+            - name: RABBITMQ_URL
+              value: "amqp://user:password@rabbitmq-service:5672"
